@@ -89,52 +89,31 @@ updateModel : Action -> Model -> Model
 updateModel action model =
   case action of
     LogIn ->
-      { messages = model.messages
-      , session = Authenticated { name = model.loginField }
-      , currentTime = model.currentTime
-      , messageField = model.messageField
+      { model |
+        session = Authenticated { name = model.loginField }
       , loginField = ""
       }
 
     LogOut ->
-      { messages = model.messages
-      , session = Guest
-      , currentTime = model.currentTime
-      , messageField = model.messageField
+      { model |
+        session = Guest
       , loginField = ""
       }
 
     PublishMessage ->
-      { messages = publishMessage model
-      , session = model.session
-      , currentTime = model.currentTime
+      { model |
+        messages = publishMessage model
       , messageField = ""
-      , loginField = model.loginField
       }
 
     TimerTick time ->
-      { messages = model.messages
-      , session = model.session
-      , currentTime = time
-      , messageField = model.messageField
-      , loginField = model.loginField
-      }
+      { model | currentTime = time }
 
     UpdateMessageField text ->
-      { messages = model.messages
-      , session = model.session
-      , currentTime = model.currentTime
-      , messageField = text
-      , loginField = model.loginField
-      }
+      { model | messageField = text }
 
     UpdateLoginField text ->
-      { messages = model.messages
-      , session = model.session
-      , currentTime = model.currentTime
-      , messageField = model.messageField
-      , loginField = text
-      }
+      { model | loginField = text }
 
 
 update : Action -> Model -> ( Model, Effects Action )
