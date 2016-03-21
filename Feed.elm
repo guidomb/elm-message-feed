@@ -200,7 +200,10 @@ renderMessage message =
 
 renderMessages : List Message -> Html
 renderMessages messages =
-  ul [] (List.map renderMessage messages)
+  if List.isEmpty messages then
+    text "There are no messages :-("
+  else
+    ul [] (List.map renderMessage messages)
 
 
 renderAuthenticatedUser : Signal.Address Action -> User -> Html
