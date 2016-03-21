@@ -183,6 +183,16 @@ createdAt : Date -> String
 createdAt date =
   Date.Format.format "%A, %B %d, %Y %I:%M:%S %p" date
 
+
+formatTime : Time -> String
+formatTime time =
+  if time == 0.0 then
+    "--:--:-- --"
+  else
+    Date.fromTime time
+      |> Date.Format.format "%I:%M:%S %p"
+
+
 renderMessage : Message -> Html
 renderMessage message =
   li [] [ text (message.text ++ " by @" ++ message.createdBy ++ " at " ++ (createdAt message.createdAt)) ]
@@ -236,7 +246,7 @@ view address model =
     [ renderMessages model.messages
     , renderInputMessage address model.messageField
     , renderSession address model.session
-    , text (toString model.currentTime)
+    , text (formatTime model.currentTime)
     ]
 
 
